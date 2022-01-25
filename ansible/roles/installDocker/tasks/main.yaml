@@ -1,5 +1,6 @@
 - include: ./../base/tasks/verifyDiskSpace.yaml
 
+
 - name: Install packages that allow apt to be used over HTTPS
   apt:
     name: "{{ packages }}"
@@ -12,6 +13,7 @@
     - curl
     - gnupg-agent
     - software-properties-common
+  become: yes
 
 - name: Add Docker GPG apt Key
   apt_key:
@@ -38,14 +40,14 @@
     - docker-ce 
     - docker-ce-cli 
     - containerd.io
-  notify:
-    - docker status
+  become: yes
 
 # Add vagrant user to docker group
 - name: Add vagrant user to docker group
   user:
     name: vagrant
     group: docker
+  become: yes
 
 # Restarting and enabling docker service
-- include: ./../base/tasks/enableAndStartService.yaml "docker"
+- include: ./../base/tasks/enableAndStartService.yaml appname=docker

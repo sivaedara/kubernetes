@@ -16,4 +16,20 @@ Make sure to add private key while logging to this boxes.
 
 
 ### Install vagrant plugin to copy files from local to vagrant box
-`vagrant plugin install vagrant-scp`
+For some reasons I can't able to copy files manually so create a dummy jenkins job to copy files to our build server
+
+
+### update host file and copy ssh keys
+Update host file and append these entries
+`sudo vi /etc/hosts`
+192.168.50.10  master
+192.168.50.11  worker1
+192.168.50.12  worker2
+
+#### copy ssh keys
+ssh-copy-id vagrant@<allnodes>
+
+
+## Run playbook to install kubernetes
+`cd /var/lib/jenkins/workspace/checoutSourceCode`
+`ansible-playbook -i ./ansible/inventories/hosts ./ansible/deployKubernetes.yaml`
