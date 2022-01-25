@@ -1,0 +1,14 @@
+---
+- hosts: all
+  roles:
+    - { role: installDocker }
+
+
+- hosts: all
+  roles:
+    - { role: installkubernetes }
+
+
+- hosts: all
+  roles:
+    - { role: initializeMaster }

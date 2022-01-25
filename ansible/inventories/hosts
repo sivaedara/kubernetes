@@ -1,0 +1,11 @@
+[all]
+master
+worker1
+worker2
+
+[master]
+master
+
+[workers]
+worker1
+worker2
