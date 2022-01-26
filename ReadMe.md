@@ -29,6 +29,8 @@ Update host file and append these entries
 #### copy ssh keys
 ssh-copy-id vagrant@<allnodes>
 
+### Update master node RAM to meet minumum requirement
+
 
 ## Run playbook to install kubernetes
 `cd /var/lib/jenkins/workspace/checoutSourceCode`

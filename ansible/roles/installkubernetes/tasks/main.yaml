@@ -8,6 +8,7 @@
   with_items:
     - swap
     - none
+  become: yes
 
 - name: Disable swap
   command: swapoff -a

@@ -9,6 +9,6 @@
     - { role: installkubernetes }
 
 
-- hosts: all
+- hosts: master
   roles:
     - { role: initializeMaster }
