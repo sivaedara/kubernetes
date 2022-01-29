@@ -1,37 +1,49 @@
-# This repo will help us to build kubernetes cluster (one master and two worker nodes)
-
-## Prereq:
-- Please make sure to have your build server up and running, we will be using our build server to run ansible playbooks. ( Please clone VagrantBoxes and run steps to create a build server)
-- A little understanding of ansible roles, atlease we by seeing existing tasks we should aware what this task is going to do
+# Build Kubernetes cluster
+`Vagrant up`
 
 
-## Build one master and worker nodes using vagrant
-Clone this repo to local and run below command to build new VM's 
-`vagrant up`
+## Install kubelet in our local machine
 
-Note: Make sure to power off any unused vm's
+curl -LO "https://dl.k8s.io/release/v1.23.0/bin/windows/amd64/kubectl.exe"
 
-### Connect to this boxes using mobaxterm or putty 
-Make sure to add private key while logging to this boxes.
+add to yout path
 
+## copy kubeconfig file
+update permissions 
+`sudo  chmod 666 /etc/kubernetes/admin.conf`
+login to master copy config file in '/etc/kubernetes/admin.conf'
 
-### Install vagrant plugin to copy files from local to vagrant box
-For some reasons I can't able to copy files manually so create a dummy jenkins job to copy files to our build server
+/etc/kubernetes/admin.conf    config
 
+add to your path ( make sure to put file name also)
+add new variable KUBECONFIG ( restart local windows shell)
 
-### update host file and copy ssh keys
-Update host file and append these entries
-`sudo vi /etc/hosts`
-192.168.50.10  master
-192.168.50.11  worker1
-192.168.50.12  worker2
+## Install Helm  
 
-#### copy ssh keys
-ssh-copy-id vagrant@<allnodes>
-
-### Update master node RAM to meet minumum requirement
+download helm cli for windows
+https://github.com/helm/helm/releases
 
 
-## Run playbook to install kubernetes
-`cd /var/lib/jenkins/workspace/checoutSourceCode`
-`ansible-playbook -i ./ansible/inventories/hosts ./ansible/deployKubernetes.yaml`
+### Installing prometheous
+URL: https://prometheus.io/docs/visualization/grafana/
+helm repo add stable https://charts.helm.sh/stable
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+
+helm install our-prometheous  prometheus-community/kube-prometheus-stack
+
+From: https://www.fosstechnix.com/install-prometheus-and-grafana-on-kubernetes-using-helm/
+
+
+nginx : https://artifacthub.io/packages/helm/bitnami/nginx
+
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm install our-nginx bitnami/nginx -n nginx
+
+
+helm pull bitnami/nginx
+
+### Edit services as load balancers 
+kubectl edit svc stable-kube-prometheus-sta-prometheus -n monitoring
+kubectl edit svc stable-grafana
+
+enable port in virtual box set up ( internal IP )

@@ -1,6 +1,0 @@
----
-- name: "verify disk space from {{ ansible_hostname }}"
-  command: df -h  
-  register: space
-- debug:
-    var: space.stdout_lines
