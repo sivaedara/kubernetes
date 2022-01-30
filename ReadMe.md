@@ -1,14 +1,12 @@
 # Build Kubernetes cluster
+`cd ./kubeclusterVMs`
 `Vagrant up`
 
-
 ## Install kubelet in our local machine
-
 curl -LO "https://dl.k8s.io/release/v1.23.0/bin/windows/amd64/kubectl.exe"
+add new variable to yout path ( This is under environment variables)
 
-add to yout path
-
-## copy kubeconfig file
+## copy kubeconfig file from master node to our local machine
 update permissions 
 `sudo  chmod 666 /etc/kubernetes/admin.conf`
 login to master copy config file in '/etc/kubernetes/admin.conf'
